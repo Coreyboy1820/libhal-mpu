@@ -66,7 +66,7 @@ hal::status is_valid_device(hal::i2c& p_i2c, hal::byte p_address)
  * @brief Construct a new mpu6050 object
  *
  * @param p_i2c - I2C bus the MPU is connected to
- * @param p_device_address - address of the mpu6050
+ * @param p_device_address - addresauto increments of the mpu6050
  */
 mpu6050::mpu6050(hal::i2c& p_i2c, hal::byte p_device_address)
   : m_i2c(&p_i2c)
