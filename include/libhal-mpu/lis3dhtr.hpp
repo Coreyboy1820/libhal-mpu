@@ -34,27 +34,31 @@ public:
 
   /// @brief power_mode_config is used to set the data rates of the
   /// high operating, normal operating, and low operating frequency modes
-  enum class data_rate_config : hal::byte
+  enum class data_rate_configs : hal::byte
   {
+    
     // the following set all modes to the same data rates listed
-    mode_0 = 0b0001'0000;
+    // 0Hz (this is the power down command)
+    mode_0 = 0b0000,
+    // 1Hz
+    mode_1 = 0b0001,
     // 10Hz
-    mode_1 = 0b0010'0000,
+    mode_2 = 0b0010,
     // 25Hz
-    mode_2 = 0b0011'0000,
+    mode_3 = 0b0011,
     // 50Hz
-    mode_3 = 0b0100'0000,
+    mode_4 = 0b0100,
     // 100Hz
-    mode_4 = 0b0101'0000,
+    mode_5 = 0b0101,
     // 200Hz
-    mode_5 = 0b0110'0000,
+    mode_6 = 0b0110,
     // 400Hz
-    mode_6 = 0b0111'0000,
+    mode_7 = 0b0111,
     // just low power mode is configured in this one to 1.6kHz
     // this is also the default mode set by power_on
-    mode_7 = 0b1000'0000,
+    mode_8 = 0b1000,
     // High resolution = normal = 1.344kHz; low power mode = 5.376kHz
-    mode_8 = 0b1001'0000,  
+    mode_9 = 0b1001,  
   };
 
   /**
@@ -102,8 +106,6 @@ private:
   hal::i2c* m_i2c;
   /// The configurable device address used for communication.
   hal::byte m_address;
-  /// this will hold the value of the ctrl_reg1 to eliminate having to save time reading the current state of the register before updating it.
-  hal::byte m_ctrl_reg1 = 0b0000'0111;
 };
 
 }  // namespace hal::mpu

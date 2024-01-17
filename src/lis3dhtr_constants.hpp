@@ -10,7 +10,7 @@ namespace hal::mpu{
   // power mode, and z, y, and x axis toggling
   ctrl_reg1 = 0x20,
   // Used to reboot memory and toggle fifo
-  ctrl_reg5 = 0x24,
+  ctrl_reg4 = 0x23,
   // low and high bits of x accelerations data
   out_x_l = 0x28,
   out_x_h = 0x29,
