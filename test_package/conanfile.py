@@ -31,6 +31,7 @@ class TestPackageConan(ConanFile):
 
     def requirements(self):
         self.requires(self.tested_reference_str)
+        self.requires("libhal/[^2.2.0]")
 
     def layout(self):
         cmake_layout(self)

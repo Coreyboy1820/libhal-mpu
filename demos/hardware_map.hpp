@@ -27,7 +27,7 @@ struct hardware_map
   hal::steady_clock* clock;
   hal::callback<void()> reset;
 };
-}
+}  // namespace hal::mpu
 
 // Application function must be implemented by one of the compilation units
 // (.cpp) files.

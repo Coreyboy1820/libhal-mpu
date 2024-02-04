@@ -21,6 +21,7 @@ find_package(libhal-util REQUIRED CONFIG)
 
 add_library(libhal-mpu
   src/mpu6050.cpp
+  src/lis3dhtr.cpp
 )
 
 target_include_directories(libhal-mpu PUBLIC include)

@@ -23,7 +23,7 @@ find_package(libhal-util REQUIRED CONFIG)
 set(platform_library $ENV{LIBHAL_PLATFORM_LIBRARY})
 set(platform $ENV{LIBHAL_PLATFORM})
 
-set(DEMOS mpu6050)
+set(DEMOS mpu6050 lis3dhtr)
 
 foreach(demo IN LISTS DEMOS)
     set(current_project ${demo}.elf)

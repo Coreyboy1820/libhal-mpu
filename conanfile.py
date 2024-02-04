@@ -24,7 +24,7 @@ required_conan_version = ">=2.0.6"
 
 class libhal_mpu_conan(ConanFile):
     name = "libhal-mpu"
-    version = "2.0.0"
+    version = "2.0.1"
     license = "Apache-2.0"
     url = "https://github.com/conan-io/conan-center-index"
     homepage = "https://github.com/libhal/libhal-mpu"
@@ -61,8 +61,8 @@ class libhal_mpu_conan(ConanFile):
         self.test_requires("boost-ext-ut/1.1.9")
 
     def requirements(self):
-        self.requires("libhal/[^2.0.0]")
-        self.requires("libhal-util/[^3.0.0]")
+        self.requires("libhal/[^2.2.0]")
+        self.requires("libhal-util/[^3.0.1]")
 
     def layout(self):
         cmake_layout(self)

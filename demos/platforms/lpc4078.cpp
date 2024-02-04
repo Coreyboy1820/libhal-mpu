@@ -16,9 +16,9 @@
 #include <libhal-armcortex/startup.hpp>
 #include <libhal-armcortex/system_control.hpp>
 
-#include <libhal-lpc40/i2c.hpp>
 #include <libhal-lpc40/clock.hpp>
 #include <libhal-lpc40/constants.hpp>
+#include <libhal-lpc40/i2c.hpp>
 #include <libhal-lpc40/uart.hpp>
 
 #include "../hardware_map.hpp"
@@ -36,7 +36,7 @@ hal::result<hal::mpu::hardware_map> initialize_platform()
   using namespace hal::literals;
 
   // Set the MCU to the maximum clock speed
-  HAL_CHECK(hal::lpc40::clock::maximum(10.0_MHz));
+  HAL_CHECK(hal::lpc40::clock::maximum(12.0_MHz));
 
   auto& clock = hal::lpc40::clock::get();
   auto cpu_frequency = clock.get_frequency(hal::lpc40::peripheral::cpu);
