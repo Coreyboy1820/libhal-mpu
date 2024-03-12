@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC
+// Copyright 2024 Khalil Estell
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 
 #include <libhal/functional.hpp>
 #include <libhal/i2c.hpp>
+#include <libhal/output_pin.hpp>
 #include <libhal/serial.hpp>
 #include <libhal/steady_clock.hpp>
 
@@ -31,6 +32,6 @@ struct hardware_map
 
 // Application function must be implemented by one of the compilation units
 // (.cpp) files.
-hal::status application(hal::mpu::hardware_map& p_map);
-hal::status initialize_processor();
-hal::result<hal::mpu::hardware_map> initialize_platform();
+void application(hal::mpu::hardware_map& p_map);
+void initialize_processor();
+hal::mpu::hardware_map initialize_platform();

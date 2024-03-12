@@ -11,11 +11,20 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+#include <boost/ut.hpp>
+#include <libhal-mpu/lis3dhtr.hpp>
 
-#pragma once
+namespace hal::mpu {
+void lis3dhtr_test()
+{
+  using namespace boost::ut;
+  using namespace std::literals;
 
-#include <string_view>
+  "lis3dhtr::create()"_test = []() {
+    // Setup
 
-namespace hal::config {
-constexpr std::string_view platform = "test";
-}  // namespace hal::config
+    // Exercise
+    // Verify
+  };
+};
+}  // namespace hal::mpu

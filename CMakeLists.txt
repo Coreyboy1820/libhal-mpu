@@ -1,4 +1,4 @@
-# Copyright 2023 Google LLC
+# Copyright 2024 Khalil Estell
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -11,28 +11,17 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 cmake_minimum_required(VERSION 3.15)
 
-project(libhal-mpu VERSION 0.0.1 LANGUAGES CXX)
+project(libhal-mpu LANGUAGES CXX)
 
-find_package(libhal REQUIRED CONFIG)
-find_package(libhal-util REQUIRED CONFIG)
+libhal_test_and_make_library(
+  LIBRARY_NAME libhal-mpu
 
-add_library(libhal-mpu
+  SOURCES
   src/mpu6050.cpp
-  src/lis3dhtr.cpp
+
+  TEST_SOURCES
+  tests/mpu6050.test.cpp
+  tests/main.test.cpp
 )
-
-target_include_directories(libhal-mpu PUBLIC include)
-target_compile_features(libhal-mpu PRIVATE cxx_std_20)
-target_link_libraries(libhal-mpu PRIVATE
-  libhal::libhal
-  libhal::util
-)
-
-if(NOT BUILD_TESTING STREQUAL OFF)
-  add_subdirectory(tests)
-endif()
-
-install(TARGETS libhal-mpu)

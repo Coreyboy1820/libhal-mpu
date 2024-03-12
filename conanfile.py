@@ -1,4 +1,4 @@
-# Copyright 2023 Google LLC
+# Copyright 2024 Khalil Estell
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,54 +13,24 @@
 # limitations under the License.
 
 from conan import ConanFile
-from conan.tools.cmake import CMake, cmake_layout
-from conan.tools.files import copy
-from conan.tools.build import check_min_cppstd
-import os
 
-
-required_conan_version = ">=2.0.6"
+required_conan_version = ">=2.0.14"
 
 
 class libhal_mpu_conan(ConanFile):
     name = "libhal-mpu"
-    version = "2.0.1"
     license = "Apache-2.0"
     url = "https://github.com/conan-io/conan-center-index"
     homepage = "https://github.com/libhal/libhal-mpu"
     description = ("A collection of drivers for the mpu")
     topics = ("mpu", "IMU", "accelerometer")
     settings = "compiler", "build_type", "os", "arch"
-    exports_sources = ("include/*", "tests/*", "LICENSE",
-                       "CMakeLists.txt", "src/*")
-    generators = "CMakeToolchain", "CMakeDeps"
 
-    @property
-    def _min_cppstd(self):
-        return "20"
-
-    @property
-    def _compilers_minimum_version(self):
-        return {
-            "gcc": "11",
-            "clang": "14",
-            "apple-clang": "14.0.0"
-        }
-
-    @property
-    def _bare_metal(self):
-        return self.settings.os == "baremetal"
-
-    def validate(self):
-        if self.settings.get_safe("compiler.cppstd"):
-            check_min_cppstd(self, self._min_cppstd)
-
-    def build_requirements(self):
-        self.tool_requires("libhal-cmake-util/0.0.1")
-        self.test_requires("libhal-mock/[^2.0.1]")
-        self.test_requires("boost-ext-ut/1.1.9")
+    python_requires = "libhal-bootstrap/[^0.0.7]"
+    python_requires_extend = "libhal-bootstrap.library"
 
     def requirements(self):
+<<<<<<< HEAD
         self.requires("libhal/[^2.2.0]")
         self.requires("libhal-util/[^3.0.1]")
 
@@ -102,6 +72,10 @@ class libhal_mpu_conan(ConanFile):
 
         cmake = CMake(self)
         cmake.install()
+=======
+        bootstrap = self.python_requires["libhal-bootstrap"]
+        bootstrap.module.add_library_requirements(self)
+>>>>>>> f4d447ef5bfdd364fe1706a74a55a68e0ff85061
 
     def package_info(self):
         self.cpp_info.libs = ["libhal-mpu"]

@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC
+// Copyright 2024 Khalil Estell
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,46 +13,55 @@
 // limitations under the License.
 
 #include <libhal-armcortex/dwt_counter.hpp>
-#include <libhal-armcortex/startup.hpp>
 #include <libhal-armcortex/system_control.hpp>
-
+#include <libhal-exceptions/control.hpp>
 #include <libhal-lpc40/clock.hpp>
 #include <libhal-lpc40/constants.hpp>
 #include <libhal-lpc40/i2c.hpp>
+#include <libhal-lpc40/output_pin.hpp>
 #include <libhal-lpc40/uart.hpp>
+#include <libhal-util/steady_clock.hpp>
 
 #include "../hardware_map.hpp"
 
-hal::status initialize_processor()
+[[noreturn]] void terminate_handler() noexcept
 {
-  hal::cortex_m::initialize_data_section();
-  hal::cortex_m::initialize_floating_point_unit();
+  hal::cortex_m::dwt_counter steady_clock(
+    hal::lpc40::get_frequency(hal::lpc40::peripheral::cpu));
 
-  return hal::success();
+  hal::lpc40::output_pin led(1, 10);
+
+  while (true) {
+    using namespace std::chrono_literals;
+    led.level(false);
+    hal::delay(steady_clock, 100ms);
+    led.level(true);
+    hal::delay(steady_clock, 100ms);
+    led.level(false);
+    hal::delay(steady_clock, 100ms);
+    led.level(true);
+    hal::delay(steady_clock, 1000ms);
+  }
 }
 
-hal::result<hal::mpu::hardware_map> initialize_platform()
+hal::mpu::hardware_map initialize_platform()
 {
   using namespace hal::literals;
-
   // Set the MCU to the maximum clock speed
+<<<<<<< HEAD
   HAL_CHECK(hal::lpc40::clock::maximum(12.0_MHz));
+=======
+  hal::lpc40::maximum(10.0_MHz);
+>>>>>>> f4d447ef5bfdd364fe1706a74a55a68e0ff85061
 
-  auto& clock = hal::lpc40::clock::get();
-  auto cpu_frequency = clock.get_frequency(hal::lpc40::peripheral::cpu);
-  static hal::cortex_m::dwt_counter counter(cpu_frequency);
+  hal::set_terminate(terminate_handler);
 
-  static std::array<hal::byte, 64> receive_buffer{};
-  static auto uart0 = HAL_CHECK((hal::lpc40::uart::get(0,
-                                                       receive_buffer,
-                                                       hal::serial::settings{
-                                                         .baud_rate = 38400,
-                                                       })));
+  static hal::cortex_m::dwt_counter counter(
+    hal::lpc40::get_frequency(hal::lpc40::peripheral::cpu));
 
-  static auto i2c = HAL_CHECK((hal::lpc40::i2c::get(2,
-                                                    hal::i2c::settings{
-                                                      .clock_rate = 100.0_kHz,
-                                                    })));
+  static std::array<hal::byte, 8> receive_buffer{};
+  static hal::lpc40::uart uart0(0, receive_buffer);
+  static hal::lpc40::i2c i2c(2);
 
   return hal::mpu::hardware_map{
     .console = &uart0,
